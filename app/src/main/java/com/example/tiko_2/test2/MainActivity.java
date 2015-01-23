@@ -85,7 +85,7 @@ public class MainActivity extends ActionBarActivity {
             // Add your data
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
             nameValuePairs.add(new BasicNameValuePair("login", "vieira_n"));
-            nameValuePairs.add(new BasicNameValuePair("password", "4urf2|uR"));
+            nameValuePairs.add(new BasicNameValuePair("password", "mon passoire"));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             // Execute HTTP Post Request
