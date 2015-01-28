@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -22,7 +23,6 @@ public class MainActivity extends ActionBarActivity {
     private TextView Login;
     private TextView Password;
     private TextView Reponse;
-    static public JSONObject token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,6 @@ public class MainActivity extends ActionBarActivity {
         Login = (TextView) findViewById(R.id.Login);
         Password = (TextView) findViewById(R.id.Password);
         Reponse = (TextView) findViewById(R.id.result);
-        token = null;
     }
 
     @Override
@@ -74,11 +73,21 @@ public class MainActivity extends ActionBarActivity {
         {
             Toast toast = Toast.makeText(getApplicationContext(), R.string.ErrorNetwork, Toast.LENGTH_SHORT);
             toast.show();
+            spinner.setVisibility(View.INVISIBLE);
             return ;
         }
-        token = log.execute("http://epitech-api.herokuapp.com/login?login=" +
-                            URLEncoder.encode(Login.getText().toString(), "UTF-8") +
-                            "&password=" + URLEncoder.encode(Password.getText().toString(), "UTF-8"))
-                            .get();
+        try {
+            JSONObject token = log.execute("http://epitech-api.herokuapp.com/login?login=" +
+                    URLEncoder.encode(Login.getText().toString(), "UTF-8") +
+                    "&password=" + URLEncoder.encode(Password.getText().toString(), "UTF-8"))
+                    .get();
+        }
+        catch (InterruptedException | ExecutionException e)
+        {
+            Toast toast = Toast.makeText(getApplicationContext(), R.string.ErrorGetJson, Toast.LENGTH_SHORT);
+            toast.show();
+            spinner.setVisibility(View.INVISIBLE);
+            return ;
+        }
     }
 }
