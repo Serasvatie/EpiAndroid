@@ -15,9 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-/**
- * Created by Tiko_2 on 27/01/2015.
- */
 public class PostRequest extends AsyncTask<String, Void, JSONObject> {
 
     @Override
@@ -82,8 +79,4 @@ public class PostRequest extends AsyncTask<String, Void, JSONObject> {
         }
         return sb.toString();
     }
- //   @Override
-   // protected void onPostExecute(String message) {
-     //   //process message
-    //}
 }

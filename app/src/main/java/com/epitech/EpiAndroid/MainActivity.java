@@ -29,7 +29,6 @@ public class MainActivity extends ActionBarActivity {
         Reponse = (TextView) findViewById(R.id.result);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -57,7 +56,5 @@ public class MainActivity extends ActionBarActivity {
         PostRequest log = new PostRequest();
 
         Reponse.setText(log.execute("http://epitech-api.herokuapp.com/login?login=" + URLEncoder.encode(Login.getText().toString(), "UTF-8") + "&password=" + URLEncoder.encode(Password.getText().toString(), "UTF-8")).toString());
-          //  Reponse.setText(rep.getString("http://epitech-api.herokuapp.com/login?login=" + URLEncoder.encode(Login.getText().toString(), "UTF-8") + "&password=" + URLEncoder.encode(Password.getText().toString(), "UTF-8")));
-
     }
 }
