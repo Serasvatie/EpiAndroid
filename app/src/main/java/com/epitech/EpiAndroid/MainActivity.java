@@ -14,7 +14,6 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends ActionBarActivity {
@@ -87,7 +86,6 @@ public class MainActivity extends ActionBarActivity {
             Toast toast = Toast.makeText(getApplicationContext(), R.string.ErrorGetJson, Toast.LENGTH_SHORT);
             toast.show();
             spinner.setVisibility(View.INVISIBLE);
-            return ;
         }
     }
 }

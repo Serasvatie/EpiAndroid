@@ -28,9 +28,9 @@ public class PostRequest extends AsyncTask<String, Void, JSONObject> {
     protected JSONObject doInBackground(String[] params) {
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(params[0]);
-        JSONObject result = null;
-        HttpResponse response = null;
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(params.length - 1 / 2);
+        JSONObject result;
+        HttpResponse response;
+        List<NameValuePair> nameValuePairs = new ArrayList<>(params.length - 1 / 2);
 
         for (int i = 1; i + 1 < params.length; i = i + 2)
         {
@@ -41,30 +41,30 @@ public class PostRequest extends AsyncTask<String, Void, JSONObject> {
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            return null;
         }
-
-        Log.d("URL", params[0]);
 
         try {
             response = httpclient.execute(httppost);
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
 
         try {
             HttpEntity entity = response.getEntity();
-            InputStream instream = null;
+            InputStream stream;
             try {
-                instream = entity.getContent();
+                stream = entity.getContent();
             } catch (IOException e) {
                 e.printStackTrace();
+                return null;
             }
-            result = new JSONObject(convertStreamToString(instream));
+            result = new JSONObject(convertStreamToString(stream));
         } catch (JSONException e) {
             e.printStackTrace();
+            return null;
         }
-
-        // do above Server call here
         return result;
     }
 
@@ -72,11 +72,12 @@ public class PostRequest extends AsyncTask<String, Void, JSONObject> {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
+        String line;
 
-        String line = null;
         try {
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+                sb.append(line);
+                sb.append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
