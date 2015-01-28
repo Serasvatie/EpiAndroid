@@ -5,9 +5,12 @@ import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,6 +18,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PostRequest extends AsyncTask<String, Void, JSONObject> {
 
@@ -24,19 +30,21 @@ public class PostRequest extends AsyncTask<String, Void, JSONObject> {
         HttpPost httppost = new HttpPost(params[0]);
         JSONObject result = null;
         HttpResponse response = null;
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(params.length - 1 / 2);
 
-        // Add your data
-        //List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-        //nameValuePairs.add(new BasicNameValuePair("id", "12345"));
-        //nameValuePairs.add(new BasicNameValuePair("stringdata", "AndDev is Cool!"));
+        for (int i = 1; i + 1 < params.length; i = i + 2)
+        {
+            nameValuePairs.add(new BasicNameValuePair(params[i], params[i + 1]));
+        }
 
-        //try {
-          //  httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-        //} catch (UnsupportedEncodingException e) {
-          //  e.printStackTrace();
-        //}
+        try {
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         Log.d("URL", params[0]);
+
         try {
             response = httpclient.execute(httppost);
         } catch (IOException e) {
