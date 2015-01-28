@@ -1,6 +1,7 @@
 package com.epitech.EpiAndroid;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -35,6 +36,7 @@ public class PostRequest extends AsyncTask<String, Void, JSONObject> {
           //  e.printStackTrace();
         //}
 
+        Log.d("URL", params[0]);
         try {
             response = httpclient.execute(httppost);
         } catch (IOException e) {
