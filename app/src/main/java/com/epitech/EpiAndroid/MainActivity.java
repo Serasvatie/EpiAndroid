@@ -17,7 +17,6 @@ public class MainActivity extends ActionBarActivity {
     private TextView Login;
     private TextView Password;
     private TextView Reponse;
-    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
