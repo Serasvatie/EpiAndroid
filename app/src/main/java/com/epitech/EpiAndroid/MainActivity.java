@@ -1,6 +1,7 @@
 package com.epitech.EpiAndroid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -100,6 +101,8 @@ public class MainActivity extends ActionBarActivity {
                     spinner.setVisibility(View.INVISIBLE);
                 }
             }
+            Intent intent = new Intent(MainActivity.this, Accueil.class);
+            startActivity(intent);
         } catch (InterruptedException | ExecutionException e) {
             Toast toast = Toast.makeText(getApplicationContext(), R.string.ErrorGetToken, Toast.LENGTH_LONG);
             toast.show();
