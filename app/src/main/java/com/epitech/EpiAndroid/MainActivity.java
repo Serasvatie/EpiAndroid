@@ -35,7 +35,7 @@ public class MainActivity extends ActionBarActivity {
         token = new Token();
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
-        Login = (TextView) findViewById(R.id.Login);
+        Login = (TextView) findViewById(R.id.Acc_Login);
         Password = (TextView) findViewById(R.id.Password);
     }
 

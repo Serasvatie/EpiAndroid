@@ -1,6 +1,10 @@
 package com.epitech.EpiAndroid;
 
 import android.app.Activity;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -10,6 +14,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.epitech.Model.PostRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class Accueil extends ActionBarActivity
@@ -24,6 +39,10 @@ public class Accueil extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private ImageView Photo;
+    private TextView Login;
+    public static JSONObject info;
+    public static JSONObject lol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +57,34 @@ public class Accueil extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        Photo = (ImageView)findViewById(R.id.Photo);
+        Login = (TextView)findViewById(R.id.Acc_Login);
+
+        PostRequest log = new PostRequest();
+        try {
+            info = log.execute("http://epitech-api.herokuapp.com/infos", "token", MainActivity.token.getToken()).get();
+            Login.setText(info.getJSONObject("infos").getString("login"));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        log = new PostRequest();
+        try {
+            lol = log.execute("http://epitech-api.herokuapp.com/photo", "token", MainActivity.token.getToken(), "login", info.getJSONObject("infos").getString("login")).get();
+            Toast.makeText(getApplicationContext(), Uri.parse(lol.getString("url")).toString(), Toast.LENGTH_LONG);
+            Photo.setImageURI(Uri.parse(lol.getString("url")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override
