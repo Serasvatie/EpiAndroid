@@ -11,6 +11,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.epitech.Model.PostRequest;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -22,7 +25,6 @@ public class MainActivity extends ActionBarActivity {
     private TextView Login;
     private TextView Password;
     private TextView Reponse;
-    static public JSONObject token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,6 @@ public class MainActivity extends ActionBarActivity {
         Login = (TextView) findViewById(R.id.Login);
         Password = (TextView) findViewById(R.id.Password);
         Reponse = (TextView) findViewById(R.id.result);
-        token = null;
     }
 
     @Override
@@ -66,26 +67,35 @@ public class MainActivity extends ActionBarActivity {
                 cm.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 
+
     public void load(View view) throws IOException {
         spinner.setVisibility(View.VISIBLE);
         PostRequest log = new PostRequest();
 
         if (!isOnline())
         {
-            Toast toast = Toast.makeText(getApplicationContext(), R.string.ErrorNetwork, Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), R.string.ErrorNetwork, Toast.LENGTH_LONG);
             toast.show();
+            spinner.setVisibility(View.INVISIBLE);
             return ;
         }
 
+        JSONObject token;
         try {
             token = log.execute("http://epitech-api.herokuapp.com/login",
                     "login", Login.getText().toString(),
-                    "password", Password.getText().toString()).get();        }
-        catch (InterruptedException | ExecutionException e)
-        {
-            Toast toast = Toast.makeText(getApplicationContext(), R.string.ErrorGetJson, Toast.LENGTH_SHORT);
+                    "password", Password.getText().toString()).get();
+            Reponse.setText(token.getString("token"));
+        } catch (JSONException | InterruptedException | ExecutionException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), R.string.ErrorGetToken, Toast.LENGTH_LONG);
             toast.show();
             spinner.setVisibility(View.INVISIBLE);
         }
+//        GetInfoFromAPI get = new GetInfoFromAPI();
+//        boolean ret = get.DoIt(Token.class, "http://epitech-api.herokuapp.com/login",
+//                "login", Login.getText().toString(),
+//                "password", Password.getText().toString());
+//        if (!ret) {
+//        }
     }
 }

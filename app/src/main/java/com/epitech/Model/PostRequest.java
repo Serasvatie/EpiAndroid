@@ -1,7 +1,6 @@
-package com.epitech.EpiAndroid;
+package com.epitech.Model;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -28,10 +27,9 @@ public class PostRequest extends AsyncTask<String, Void, JSONObject> {
     protected JSONObject doInBackground(String[] params) {
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(params[0]);
-        JSONObject result;
         HttpResponse response;
         List<NameValuePair> nameValuePairs = new ArrayList<>(params.length - 1 / 2);
-
+        JSONObject result;
         for (int i = 1; i + 1 < params.length; i = i + 2)
         {
             nameValuePairs.add(new BasicNameValuePair(params[i], params[i + 1]));
@@ -54,14 +52,9 @@ public class PostRequest extends AsyncTask<String, Void, JSONObject> {
         try {
             HttpEntity entity = response.getEntity();
             InputStream stream;
-            try {
-                stream = entity.getContent();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
+            stream = entity.getContent();
             result = new JSONObject(convertStreamToString(stream));
-        } catch (JSONException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
             return null;
         }
