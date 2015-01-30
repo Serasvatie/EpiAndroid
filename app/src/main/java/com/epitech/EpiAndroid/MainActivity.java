@@ -95,10 +95,12 @@ public class MainActivity extends ActionBarActivity {
                     Toast toast = Toast.makeText(getApplicationContext(), tok.getString("message"), Toast.LENGTH_LONG);
                     toast.show();
                     spinner.setVisibility(View.INVISIBLE);
+                    return ;
                 } catch (JSONException a) {
                     Toast toast = Toast.makeText(getApplicationContext(), R.string.ErrorGetToken, Toast.LENGTH_LONG);
                     toast.show();
                     spinner.setVisibility(View.INVISIBLE);
+                    return ;
                 }
             }
             Intent intent = new Intent(MainActivity.this, Accueil.class);
