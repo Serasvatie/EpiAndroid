@@ -1,7 +1,8 @@
 package com.epitech.EpiAndroid;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 
@@ -24,6 +25,9 @@ public class MainNavigation extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
 
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, new Accueil()).commit();
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -32,15 +36,33 @@ public class MainNavigation extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment;
+        switch (position)
+        {
+            case 0:
+                fragment = new Accueil();
+                break;
+            case 1:
+                fragment = new Planning();
+                break;
+            case 2:
+                fragment = new Token();
+                break;
+            case 3:
+                fragment = new Grade();
+                break;
+            default :
+                fragment = new Accueil();
+                break;
+        }
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
-/*
+
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
@@ -55,7 +77,12 @@ public class MainNavigation extends ActionBarActivity
             case 4:
                 mTitle = getString(R.string.title_section4);
                 break;
+            default:
+                mTitle = getString(R.string.title_section1);
+                break;
         }
+        android.support.v7.app.ActionBar actionbar = getSupportActionBar();
+        actionbar.setTitle(mTitle);
     }
 /*
     public static class PlaceholderFragment extends Fragment {

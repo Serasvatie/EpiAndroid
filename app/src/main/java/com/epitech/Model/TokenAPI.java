@@ -3,16 +3,12 @@ package com.epitech.Model;
 /**
  * Created by favre_q on 29/01/15.
  */
-public class Token {
+public class TokenAPI {
 
-    public String token;
+    private String token;
 
-    public Token(){
+    public TokenAPI(){
         token = "";
-    }
-
-    public Token(String token) {
-        this.token = token;
     }
 
     public String getToken() {

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.epitech.Model.PostRequest;
-import com.epitech.Model.Token;
+import com.epitech.Model.TokenAPI;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,13 +26,13 @@ public class MainActivity extends ActionBarActivity {
     private ProgressBar spinner;
     private TextView Login;
     private TextView Password;
-    public static Token token;
+    public static TokenAPI token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        token = new Token();
+        token = new TokenAPI();
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
         Login = (TextView) findViewById(R.id.Acc_Login);
