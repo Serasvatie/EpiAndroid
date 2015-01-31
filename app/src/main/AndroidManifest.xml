@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Accueil"
+            android:name=".MainNavigation"
             android:label="@string/title_activity_accueil" >
         </activity>
     </application>

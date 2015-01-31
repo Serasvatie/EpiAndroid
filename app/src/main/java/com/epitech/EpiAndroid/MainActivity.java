@@ -103,7 +103,7 @@ public class MainActivity extends ActionBarActivity {
                     return ;
                 }
             }
-            Intent intent = new Intent(MainActivity.this, Accueil.class);
+            Intent intent = new Intent(MainActivity.this, MainNavigation.class);
             startActivity(intent);
         } catch (InterruptedException | ExecutionException e) {
             Toast toast = Toast.makeText(getApplicationContext(), R.string.ErrorGetToken, Toast.LENGTH_LONG);
