@@ -2,24 +2,19 @@ package com.epitech.EpiAndroid;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
+import com.epitech.Model.GetBitMap;
 import com.epitech.Model.PostRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -31,30 +26,9 @@ public class Accueil extends Fragment {
     String login;
     String url;
     JSONObject infos;
-    PostRequest req;
 
     public Accueil()
     {
-        photo = (ImageView) getView().findViewById(R.id.Photo);
-
-        try {
-            infos = req.execute("http://epitech-api.herokuapp.com/infos", "token", MainActivity.token.getToken()).get();
-            login = infos.getJSONObject("infos").getString("login");
-            req = null;
-            url = req.execute("http://epitech-api.herokuapp.com/photo", "token", MainActivity.token.getToken(), "login", login).get().getString("url");
-            photo.setImageBitmap(BitmapFactory.decodeStream(new URL("url").openConnection().getInputStream()));
-            Log.d("URL", url);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -68,4 +42,22 @@ public class Accueil extends Fragment {
         return inflater.inflate(R.layout.fragment_accueil, container, false);
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        PostRequest req = new PostRequest();
+        GetBitMap bitmap = new GetBitMap();
+        try {
+            photo = (ImageView) getView().findViewById(R.id.Photo);
+            infos = req.execute("http://epitech-api.herokuapp.com/infos", "token", MainActivity.token.getToken()).get();
+            login = infos.getJSONObject("infos").getString("login");
+            req = new PostRequest();
+            url = req.execute("http://epitech-api.herokuapp.com/photo", "token", MainActivity.token.getToken(), "login", login).get().getString("url");
+            photo.setImageBitmap(bitmap.execute(url).get());
+            Log.d("URL", url);
+        } catch (ExecutionException | InterruptedException | JSONException | NullPointerException e) {
+             Log.d("ERROR", e.getMessage());
+       }
+    }
 }
