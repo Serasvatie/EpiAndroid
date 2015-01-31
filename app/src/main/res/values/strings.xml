@@ -16,5 +16,7 @@
     <string name="action_example">Example action</string>
     <string name="errorActionBarTitle">Error when settings actionBar title !</string>
     <string name="photo">photo</string>
-
+    <string name="errorApi">Fail to get informations from the API !</string>
+    <string name="PatternLog">Logs time :</string>
+    <string name="Hour">Hours</string>
 </resources>
