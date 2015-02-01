@@ -75,29 +75,30 @@ public class Accueil extends Fragment {
             log = (TextView) getView().findViewById(R.id.Log);
             list = (ListView) getView().findViewById(R.id.LastMessage);
 
-            infos = req.execute("http://epitech-api.herokuapp.com/infos", "token", MainActivity.token.getToken()).get();
-            login = infos.getJSONObject("infos").getString("login");
+            infos = req.execute(getString(R.string.URLgetInfo), getString(R.string.token), MainActivity.token.getToken()).get();
+            login = infos.getJSONObject(getString(R.string.info)).getString(getString(R.string.Login));
 
             req = new PostRequest();
-            url = req.execute("http://epitech-api.herokuapp.com/photo", "token", MainActivity.token.getToken(), "login", login).get().getString("url");
+            url = req.execute(getString(R.string.URLgetPhoto), getString(R.string.token), MainActivity.token.getToken(), getString(R.string.Login), login).get().getString(getString(R.string.url));
             photo.setImageBitmap(bitmap.execute(url).get());
 
-            tabMessage = reqarray.execute("http://epitech-api.herokuapp.com/messages", "token", MainActivity.token.getToken()).get();
+            tabMessage = reqarray.execute(getString(R.string.URLgetMessages), getString(R.string.token), MainActivity.token.getToken()).get();
             arrayMessage = new String[tabMessage.length()];
             for (int i = 0; i < tabMessage.length(); i++) {
                 JSONObject tmp = tabMessage.getJSONObject(i);
-                int indexHtml = tmp.getString("title").indexOf("<a href");
+                int indexHtml = tmp.getString(getString(R.string.title)).indexOf(getString(R.string.HTMLLink));
                 if (indexHtml == -1) {
-                    arrayMessage[i] = tmp.getString("title") + " " + tmp.getString("date");
+                    arrayMessage[i] = tmp.getString(getString(R.string.title)) + " " + tmp.getString(getString(R.string.date));
                 } else {
-                    arrayMessage[i] = tmp.getString("title").substring(0, indexHtml) + Html.fromHtml(tmp.getString("title").substring(indexHtml)) + " " + tmp.getString("date");
+                    arrayMessage[i] = tmp.getString(getString(R.string.title)).substring(0, indexHtml) + Html.fromHtml(tmp.getString(getString(R.string.title)).substring(indexHtml)) + " " + tmp.getString(getString(R.string.date));
                 }
             }
+
             ArrayAdapter<String> adpater = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, arrayMessage);
             list.setAdapter(adpater);
 
-            title.setText(infos.getJSONObject("infos").getString("title"));
-            Double nbr = Double.parseDouble(infos.getJSONObject("current").getString("active_log"));
+            title.setText(infos.getJSONObject(getString(R.string.info)).getString(getString(R.string.title)));
+            Double nbr = Double.parseDouble(infos.getJSONObject(getString(R.string.current)).getString(getString(R.string.active_log)));
             log.setText(getString(R.string.PatternLog) + String.valueOf(nbr.intValue()) + getString(R.string.Hour));
 
         } catch (ExecutionException | InterruptedException | JSONException | NullPointerException e) {

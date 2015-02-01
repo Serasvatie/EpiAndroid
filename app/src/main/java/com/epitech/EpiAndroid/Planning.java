@@ -61,7 +61,7 @@ public class Planning extends Fragment {
                         StartYear = year;
                         StartDay = dayOfMonth;
                         StartMonth = monthOfYear + 1;
-                        start.setText(StartYear + "-" + StartMonth + "-" + StartDay);
+                        start.setText(StartYear + getString(R.string.TiretSeparator) + StartMonth + getString(R.string.TiretSeparator) + StartDay);
                         getInfoFromApi();
                     }
                 }, StartYear, StartMonth - 1, StartDay);
@@ -78,7 +78,7 @@ public class Planning extends Fragment {
                         EndYear = year;
                         EndDay = dayOfMonth;
                         EndMonth = monthOfYear + 1;
-                        end.setText(EndYear + "-" + EndMonth + "-" + EndDay);
+                        end.setText(EndYear + getString(R.string.TiretSeparator) + EndMonth + getString(R.string.TiretSeparator) + EndDay);
                         getInfoFromApi();
                     }
                 }, EndYear, EndMonth - 1, EndDay);
@@ -102,8 +102,8 @@ public class Planning extends Fragment {
         EndYear = current.get(Calendar.YEAR);
         start = (Button) getView().findViewById(R.id.BeginDate);
         end = (Button) getView().findViewById(R.id.EndDate);
-        start.setText(StartYear + "-" + StartMonth + "-" + StartDay);
-        end.setText(EndYear + "-" + EndMonth + "-" + EndDay);
+        start.setText(StartYear + getString(R.string.TiretSeparator) + StartMonth + getString(R.string.TiretSeparator) + StartDay);
+        end.setText(EndYear + getString(R.string.TiretSeparator) + EndMonth + getString(R.string.TiretSeparator) + EndDay);
 
         getInfoFromApi();
     }
@@ -120,24 +120,24 @@ public class Planning extends Fragment {
 
         try {
             Planning = (ListView) getView().findViewById(R.id.Planning);
-            tabPlanning = reqarray.execute("http://epitech-api.herokuapp.com/planning", "token", MainActivity.token.getToken(),
-                    "start", Integer.toString(StartYear) + "-" + Integer.toString(StartMonth) + "-" + Integer.toString(StartDay),
-                    "end", Integer.toString(EndYear) + "-" + Integer.toString(EndMonth) + "-" + Integer.toString(EndDay)).get();
+            tabPlanning = reqarray.execute(getString(R.string.URLgetPlanning), getString(R.string.token), MainActivity.token.getToken(),
+                    getString(R.string.start), Integer.toString(StartYear) + getString(R.string.TiretSeparator) + Integer.toString(StartMonth) + getString(R.string.TiretSeparator) + Integer.toString(StartDay),
+                    getString(R.string.end), Integer.toString(EndYear) + getString(R.string.TiretSeparator) + Integer.toString(EndMonth) + getString(R.string.TiretSeparator) + Integer.toString(EndDay)).get();
             String tmparray[] = new String[tabPlanning.length()];
             int nbElem = 0;
 
             for (int i = 0; i < tabPlanning.length(); i++) {
                 try {
                     JSONObject tmp = tabPlanning.getJSONObject(i);
-                    if (tmp.getString("module_registered").equals("true")) {
-                        tmparray[i] = "Module : " + tmp.getString("titlemodule") + "\n";
-                        tmparray[i] = tmparray[i] + "Activity : " + tmp.getString("acti_title") + "\n";
-                        tmparray[i] = tmparray[i] + "Room : " + tmp.getJSONObject("room").getString("code") + "\n";
-                        tmparray[i] = tmparray[i] + "Start : " + tmp.getString("start") + "\n";
-                        tmparray[i] = tmparray[i] + "Hours : " + tmp.getString("nb_hours") + "\n";
+                    if (tmp.getString(getString(R.string.moduleregistered)).equals(getString(R.string.True))) {
+                        tmparray[i] = getString(R.string.ModuleDes) + tmp.getString(getString(R.string.TitleModule)) + "\n";
+                        tmparray[i] = tmparray[i] + getString(R.string.ActivityDes) + tmp.getString(getString(R.string.acti_title)) + "\n";
+                        tmparray[i] = tmparray[i] + getString(R.string.RoomDes) + tmp.getJSONObject(getString(R.string.room)).getString(getString(R.string.code)) + "\n";
+                        tmparray[i] = tmparray[i] + getString(R.string.StartDes) + tmp.getString(getString(R.string.start)) + "\n";
+                        tmparray[i] = tmparray[i] + getString(R.string.HourDes) + tmp.getString(getString(R.string.nb_hours)) + "\n";
                         nbElem++;
                     } else {
-                        tmparray[i] = "Null";
+                        tmparray[i] = getString(R.string.Null);
                     }
                 } catch (JSONException e) {
                     Toast toast = Toast.makeText(getActivity(), R.string.errorParse, Toast.LENGTH_LONG);
@@ -148,7 +148,7 @@ public class Planning extends Fragment {
             arrayPlanning = new String[nbElem];
             nbElem = 0;
             for (String aTmparray : tmparray)
-                if (!aTmparray.equals("Null") && nbElem < arrayPlanning.length) {
+                if (!aTmparray.equals(getString(R.string.Null)) && nbElem < arrayPlanning.length) {
                     arrayPlanning[nbElem] = aTmparray;
                     nbElem++;
                 }

@@ -83,15 +83,15 @@ public class MainActivity extends ActionBarActivity {
 
         JSONObject tok;
         try {
-            tok = log.execute("http://epitech-api.herokuapp.com/login",
-                    "login", Login.getText().toString(),
-                    "password", Password.getText().toString()).get();
+            tok = log.execute(getString(R.string.URLgetToken),
+                    getString(R.string.Login), Login.getText().toString(),
+                    getString(R.string.Password), Password.getText().toString()).get();
             try {
-                token.setToken(tok.getString("token"));
+                token.setToken(tok.getString(getString(R.string.token)));
             } catch (JSONException e)
             {
                 try {
-                    Toast toast = Toast.makeText(getApplicationContext(), tok.getString("message"), Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplicationContext(), tok.getString(getString(R.string.message)), Toast.LENGTH_LONG);
                     toast.show();
                     spinner.setVisibility(View.INVISIBLE);
                     return ;

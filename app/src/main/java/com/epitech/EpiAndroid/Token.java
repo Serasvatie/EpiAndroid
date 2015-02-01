@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.epitech.Model.PostRequest;
 import com.epitech.Model.PostRequestArray;
@@ -64,7 +63,7 @@ public class Token extends Fragment {
         PostRequestArray reqarray = new PostRequestArray();
 
         try {
-            tabToken = reqarray.execute(getString(R.string.reqplanning), getString(R.string.token), MainActivity.token.getToken(), getString(R.string.start), past, getString(R.string.end), actu).get();
+            tabToken = reqarray.execute(getString(R.string.URLgetPlanning), getString(R.string.token), MainActivity.token.getToken(), getString(R.string.start), past, getString(R.string.end), actu).get();
             int j = 0;
             for (int i = 0; i < tabToken.length(); i++) {
                 JSONObject tmp = tabToken.getJSONObject(i);
@@ -85,12 +84,9 @@ public class Token extends Fragment {
             }
             ArrayAdapter<String> adpater = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, arrayToken);
             list.setAdapter(adpater);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (InterruptedException | ExecutionException | JSONException e) {
+            Toast toast = Toast.makeText(getActivity(), R.string.errorApi, Toast.LENGTH_LONG);
+            toast.show();
         }
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -120,7 +116,7 @@ public class Token extends Fragment {
                 try {
                     JSONObject tmp = jsonArray.getJSONObject(position);
                     PostRequest req = new PostRequest();
-                    req.execute(getString(R.string.regvtoken), getString(R.string.token), MainActivity.token.getToken(),
+                    req.execute(getString(R.string.URLsetToken), getString(R.string.token), MainActivity.token.getToken(),
                             getString(R.string.scolaryear), tmp.getString(getString(R.string.scolaryear)),
                             getString(R.string.codemodule), tmp.getString(getString(R.string.codemodule)),
                             getString(R.string.codeinstance), tmp.getString(getString(R.string.codeinstance)),

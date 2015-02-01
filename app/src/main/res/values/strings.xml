@@ -3,6 +3,7 @@
 
     <string name="app_name">EpiAndroid</string>
     <string name="action_settings">Settings</string>
+    <string name="errorNavigation">Activity must implement NavigationDrawerCallbacks.</string>
     <string name="EncodeValue">UTF-8</string>
     <string name="ErrorNetwork">Network isn\'t available !</string>
     <string name="ErrorGetToken">Fail to login ! Check your login or password.</string>
@@ -22,8 +23,6 @@
     <string name="DefaultDate">0000-00-00</string>
     <string name="errorParse">Couldn\'t get one elements of the API</string>
     <string name="simpledateformat">yyyy-MM-dd</string>
-    <string name="reqplanning">http://epitech-api.herokuapp.com/planning</string>
-    <string name="token">token</string>
     <string name="start">start</string>
     <string name="end">end</string>
     <string name="event_registered">event_registered</string>
@@ -34,10 +33,42 @@
     <string name="EnterToken">Enter Token</string>
     <string name="OK">OK</string>
     <string name="Cancel">Cancel</string>
-    <string name="regvtoken">http://epitech-api.herokuapp.com/token</string>
     <string name="scolaryear">scolaryear</string>
     <string name="codemodule">codemodule</string>
     <string name="codeinstance">codeinstance</string>
     <string name="codeacti">codeacti</string>
     <string name="tokenvalidationcode">tokenvalidationcode</string>
+    <string name="Login">login</string>
+    <string name="Password">password</string>
+    <string name="URLgetToken">http://epitech-api.herokuapp.com/login</string>
+    <string name="URLgetInfo">http://epitech-api.herokuapp.com/infos</string>
+    <string name="URLgetPhoto">http://epitech-api.herokuapp.com/photo</string>
+    <string name="URLgetMessages">http://epitech-api.herokuapp.com/messages</string>
+    <string name="URLgetPlanning">http://epitech-api.herokuapp.com/planning</string>
+    <string name="URLsetToken">http://epitech-api.herokuapp.com/token</string>
+    <string name="token">token</string>
+    <string name="message">message</string>
+    <string name="endline">\n</string>
+    <string name="title">title</string>
+    <string name="info">infos</string>
+    <string name="HTMLLink">&lt;a href</string>
+    <string name="date">date</string>
+    <string name="url">url</string>
+    <string name="active_log">active_log</string>
+    <string name="current">current</string>
+
+    <string name="moduleregistered">module_registered</string>
+    <string name="True">true</string>
+    <string name="ModuleDes">Module : </string>
+    <string name="TitleModule">titlemodule</string>
+
+    <string name="TiretSeparator">-</string>
+    <string name="Null">Null</string>
+    <string name="room">room</string>
+    <string name="code">code</string>
+    <string name="nb_hours">nb_hours</string>
+    <string name="ActivityDes">Activity : </string>
+    <string name="RoomDes">Room : </string>
+    <string name="StartDes">Start : </string>
+    <string name="HourDes">Hours : </string>
 </resources>
