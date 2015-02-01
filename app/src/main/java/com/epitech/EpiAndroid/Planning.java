@@ -3,6 +3,8 @@ package com.epitech.EpiAndroid;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,6 +111,13 @@ public class Planning extends Fragment {
     private void getInfoFromApi() {
         PostRequestArray reqarray = new PostRequestArray();
 
+        if (!isOnline())
+        {
+            Toast toast = Toast.makeText(getActivity(), R.string.ErrorNetwork, Toast.LENGTH_LONG);
+            toast.show();
+            return ;
+        }
+
         try {
             Planning = (ListView) getView().findViewById(R.id.Planning);
             tabPlanning = reqarray.execute("http://epitech-api.herokuapp.com/planning", "token", MainActivity.token.getToken(),
@@ -151,4 +160,12 @@ public class Planning extends Fragment {
                 toast.show();
             }
         }
+    private boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null &&
+                cm.getActiveNetworkInfo().isConnectedOrConnecting();
     }
+
+}

@@ -69,7 +69,6 @@ public class MainActivity extends ActionBarActivity {
                 cm.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 
-
     public void load(View view) throws IOException {
         spinner.setVisibility(View.VISIBLE);
         PostRequest log = new PostRequest();

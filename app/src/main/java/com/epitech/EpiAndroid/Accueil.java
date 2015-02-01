@@ -2,6 +2,8 @@ package com.epitech.EpiAndroid;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -57,6 +59,13 @@ public class Accueil extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        if (!isOnline())
+        {
+            Toast toast = Toast.makeText(getActivity(), R.string.ErrorNetwork, Toast.LENGTH_LONG);
+            toast.show();
+            return ;
+        }
+
         PostRequest req = new PostRequest();
         PostRequestArray reqarray = new PostRequestArray();
         GetBitMap bitmap = new GetBitMap();
@@ -95,5 +104,13 @@ public class Accueil extends Fragment {
             Toast toast = Toast.makeText(getActivity(), R.string.errorApi, Toast.LENGTH_LONG);
             toast.show();
          }
+    }
+
+    private boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null &&
+                cm.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 }
