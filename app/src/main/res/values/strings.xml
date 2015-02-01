@@ -21,4 +21,23 @@
     <string name="Hour">Hours</string>
     <string name="DefaultDate">0000-00-00</string>
     <string name="errorParse">Couldn\'t get one elements of the API</string>
+    <string name="simpledateformat">yyyy-MM-dd</string>
+    <string name="reqplanning">http://epitech-api.herokuapp.com/planning</string>
+    <string name="token">token</string>
+    <string name="start">start</string>
+    <string name="end">end</string>
+    <string name="event_registered">event_registered</string>
+    <string name="snull">null</string>
+    <string name="present">present</string>
+    <string name="acti_title">acti_title</string>
+    <string name="codeevent">codeevent</string>
+    <string name="EnterToken">Enter Token</string>
+    <string name="OK">OK</string>
+    <string name="Cancel">Cancel</string>
+    <string name="regvtoken">http://epitech-api.herokuapp.com/token</string>
+    <string name="scolaryear">scolaryear</string>
+    <string name="codemodule">codemodule</string>
+    <string name="codeinstance">codeinstance</string>
+    <string name="codeacti">codeacti</string>
+    <string name="tokenvalidationcode">tokenvalidationcode</string>
 </resources>

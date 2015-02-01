@@ -3,10 +3,8 @@ package com.epitech.EpiAndroid;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.InputType;
@@ -17,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.epitech.Model.PostRequest;
 import com.epitech.Model.PostRequestArray;
@@ -56,29 +53,22 @@ public class Token extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (!isOnline())
-        {
-            Toast toast = Toast.makeText(getActivity(), R.string.ErrorNetwork, Toast.LENGTH_LONG);
-            toast.show();
-            return ;
-        }
-
         list = (ListView) getView().findViewById(R.id.Token);
 
         Date cDate = new Date();
-        String actu = new SimpleDateFormat("yyyy-MM-dd").format(cDate);
+        String actu = new SimpleDateFormat(getString(R.string.simpledateformat)).format(cDate);
 
         Date pDate = new Date(cDate.getTime() - 604800000L);
-        String past = new SimpleDateFormat("yyyy-MM-dd").format(pDate);
+        String past = new SimpleDateFormat(getString(R.string.simpledateformat)).format(pDate);
 
         PostRequestArray reqarray = new PostRequestArray();
 
         try {
-            tabToken = reqarray.execute("http://epitech-api.herokuapp.com/planning", "token", MainActivity.token.getToken(), "start", "2015-01-20", "end", "2015-01-21").get();
+            tabToken = reqarray.execute(getString(R.string.reqplanning), getString(R.string.token), MainActivity.token.getToken(), getString(R.string.start), past, getString(R.string.end), actu).get();
             int j = 0;
             for (int i = 0; i < tabToken.length(); i++) {
                 JSONObject tmp = tabToken.getJSONObject(i);
-                if (!tmp.getString("event_registered").equals("null") && !tmp.getString("event_registered").equals("present")) {
+                if (!tmp.getString(getString(R.string.event_registered)).equals(getString(R.string.snull)) && !tmp.getString(getString(R.string.event_registered)).equals(getString(R.string.present))) {
                     j++;
                 }
             }
@@ -87,8 +77,8 @@ public class Token extends Fragment {
             j = 0;
             for (int i = 0; i < tabToken.length(); i++) {
                 JSONObject tmp = tabToken.getJSONObject(i);
-                if (!tmp.getString("event_registered").equals("null") && !tmp.getString("event_registered").equals("present")) {
-                    arrayToken[j] = tmp.getString("acti_title") + " - " + tmp.getString("codeevent") + "\n" + tmp.getString("start") + " - " + tmp.getString("end");
+                if (!tmp.getString(getString(R.string.event_registered)).equals(getString(R.string.snull)) && !tmp.getString(getString(R.string.event_registered)).equals(getString(R.string.present))) {
+                    arrayToken[j] = tmp.getString(getString(R.string.acti_title)) + " - " + tmp.getString(getString(R.string.codeevent)) + "\n" + tmp.getString(getString(R.string.start)) + " - " + tmp.getString(getString(R.string.end));
                     j++;
                     jsonArray.put(tmp);
                 }
@@ -109,17 +99,17 @@ public class Token extends Fragment {
                                     long id) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Enter Token");
+                builder.setTitle(getString(R.string.EnterToken));
                 final EditText input = new EditText(getActivity());
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 builder.setView(input);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         m_token = input.getText().toString();
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getString(R.string.Cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -130,13 +120,13 @@ public class Token extends Fragment {
                 try {
                     JSONObject tmp = jsonArray.getJSONObject(position);
                     PostRequest req = new PostRequest();
-                    req.execute("http://epitech-api.herokuapp.com/token", "token", MainActivity.token.getToken(),
-                            "scolaryear", tmp.getString("scolaryear"),
-                            "codemodule", tmp.getString("codemodule"),
-                            "codeinstance", tmp.getString("codeinstance"),
-                            "codeacti", tmp.getString("codeacti"),
-                            "codeenvent", tmp.getString("codeevent"),
-                            "tokenvalidationcode", m_token);
+                    req.execute(getString(R.string.regvtoken), getString(R.string.token), MainActivity.token.getToken(),
+                            getString(R.string.scolaryear), tmp.getString(getString(R.string.scolaryear)),
+                            getString(R.string.codemodule), tmp.getString(getString(R.string.codemodule)),
+                            getString(R.string.codeinstance), tmp.getString(getString(R.string.codeinstance)),
+                            getString(R.string.codeacti), tmp.getString(getString(R.string.codeacti)),
+                            getString(R.string.codeevent), tmp.getString(getString(R.string.codeevent)),
+                            getString(R.string.tokenvalidationcode), m_token);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -144,13 +134,5 @@ public class Token extends Fragment {
 
             }
         });
-    }
-
-    private boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        return cm.getActiveNetworkInfo() != null &&
-                cm.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 }
