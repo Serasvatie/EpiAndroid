@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,6 +131,10 @@ public class Planning extends Fragment {
                     else
                         arrayPlanning[i] = arrayPlanning[i] + "No subscribe";
                 }
+                else {
+                    arrayPlanning[i] = "Null";
+                }
+
             }
             ArrayAdapter<String> adpater = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, arrayPlanning);
             Planning.setAdapter(adpater);
