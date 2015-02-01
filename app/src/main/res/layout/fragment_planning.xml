@@ -9,8 +9,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:text="@string/DefaultDate"
         android:textSize="25sp" />
@@ -22,8 +22,8 @@
         android:layout_alignTop="@+id/BeginDate"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="45dp"
-        android:layout_marginEnd="41dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/DefaultDate"
         android:textSize="25sp" />
 

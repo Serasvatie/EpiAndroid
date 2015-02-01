@@ -27,12 +27,12 @@ import java.util.concurrent.ExecutionException;
  */
 public class Planning extends Fragment {
 
-    private int StartDay = 0;
-    private int StartMonth = 0;
-    private int StartYear = 0;
-    private int EndDay = 0;
-    private int EndMonth = 0;
-    private int EndYear = 0;
+    private int StartDay;
+    private int StartMonth;
+    private int StartYear;
+    private int EndDay;
+    private int EndMonth;
+    private int EndYear;
     Button start;
     Button end;
     JSONArray tabPlanning;
@@ -58,10 +58,11 @@ public class Planning extends Fragment {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         StartYear = year;
                         StartDay = dayOfMonth;
-                        StartMonth = monthOfYear;
-                        start.setText(Integer.toString(StartYear) + "-" + Integer.toString(StartMonth) + "-" + Integer.toString(StartDay));
+                        StartMonth = monthOfYear + 1;
+                        start.setText(StartYear + "-" + StartMonth + "-" + StartDay);
+                        getInfoFromApi();
                     }
-                }, StartYear, StartMonth, StartDay);
+                }, StartYear, StartMonth - 1, StartDay);
                 dpd.show();
                 getInfoFromApi();
             }
@@ -74,12 +75,12 @@ public class Planning extends Fragment {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         EndYear = year;
                         EndDay = dayOfMonth;
-                        EndMonth = monthOfYear;
-                        end.setText(Integer.toString(EndYear) + "-" + Integer.toString(EndMonth) + "-" + Integer.toString(EndDay));
+                        EndMonth = monthOfYear + 1;
+                        end.setText(EndYear + "-" + EndMonth + "-" + EndDay);
+                        getInfoFromApi();
                     }
-                }, EndYear, EndMonth, EndDay);
+                }, EndYear, EndMonth - 1, EndDay);
                 dpd.show();
-                getInfoFromApi();
             }
         });
         return input;
@@ -91,57 +92,63 @@ public class Planning extends Fragment {
 
         Calendar current = Calendar.getInstance();
         StartDay = current.get(Calendar.DAY_OF_MONTH);
-        StartMonth = current.get(Calendar.MONTH);
+        StartMonth = current.get(Calendar.MONTH) + 1;
         StartYear = current.get(Calendar.YEAR);
         current.add(Calendar.DAY_OF_MONTH, 7);
         EndDay = current.get(Calendar.DAY_OF_MONTH);
-        EndMonth = current.get(Calendar.MONTH);
+        EndMonth = current.get(Calendar.MONTH) + 1;
         EndYear = current.get(Calendar.YEAR);
         start = (Button) getView().findViewById(R.id.BeginDate);
         end = (Button) getView().findViewById(R.id.EndDate);
-        start.setText(Integer.toString(StartYear) + "-" + Integer.toString(StartMonth) + "-" + Integer.toString(StartDay));
-        end.setText(Integer.toString(EndYear) + "-" + Integer.toString(EndMonth) + "-" + Integer.toString(EndDay));
+        start.setText(StartYear + "-" + StartMonth + "-" + StartDay);
+        end.setText(EndYear + "-" + EndMonth + "-" + EndDay);
 
         getInfoFromApi();
     }
 
-    private void getInfoFromApi()
-    {
+    private void getInfoFromApi() {
         PostRequestArray reqarray = new PostRequestArray();
 
         try {
             Planning = (ListView) getView().findViewById(R.id.Planning);
             tabPlanning = reqarray.execute("http://epitech-api.herokuapp.com/planning", "token", MainActivity.token.getToken(),
-                    "start",Integer.toString(StartYear) + "-" + Integer.toString(StartMonth) + "-" + Integer.toString(StartDay),
-                    "end",(Integer.toString(EndYear) + "-" + Integer.toString(EndMonth) + "-" + Integer.toString(EndDay))).get();
-            arrayPlanning = new String[tabPlanning.length()];
-            for (int i = 0; i < tabPlanning.length(); i++) {
-                JSONObject tmp = tabPlanning.getJSONObject(i);
-                if (tmp.getString("module_registered").equals("true"))
-                {
-                    arrayPlanning[i] = "Module : " + tmp.getString("titlemodule") + "\n";
-                    arrayPlanning[i] = arrayPlanning[i] + "Activity : " + tmp.getString("acti_title") + "\n";
-                    arrayPlanning[i] = arrayPlanning[i] + "Room : " + tmp.getJSONObject("room").getString("code") + "\n";
-                    arrayPlanning[i] = arrayPlanning[i] + "Start : " + tmp.getString("start") + "\n";
-                    arrayPlanning[i] = arrayPlanning[i] + "Hours : " + tmp.getString("nb_hours") + "\n";
-                    if (tmp.getString("register_student").equals("true"))
-                    {
-                        arrayPlanning[i] = arrayPlanning[i] + "Subscribe";
-                    }
-                    else
-                        arrayPlanning[i] = arrayPlanning[i] + "No subscribe";
-                }
-                else {
-                    arrayPlanning[i] = "Null";
-                }
+                    "start", Integer.toString(StartYear) + "-" + Integer.toString(StartMonth) + "-" + Integer.toString(StartDay),
+                    "end", Integer.toString(EndYear) + "-" + Integer.toString(EndMonth) + "-" + Integer.toString(EndDay)).get();
+            String tmparray[] = new String[tabPlanning.length()];
+            int nbElem = 0;
 
+            for (int i = 0; i < tabPlanning.length(); i++) {
+                try {
+                    JSONObject tmp = tabPlanning.getJSONObject(i);
+                    if (tmp.getString("module_registered").equals("true")) {
+                        tmparray[i] = "Module : " + tmp.getString("titlemodule") + "\n";
+                        tmparray[i] = tmparray[i] + "Activity : " + tmp.getString("acti_title") + "\n";
+                        tmparray[i] = tmparray[i] + "Room : " + tmp.getJSONObject("room").getString("code") + "\n";
+                        tmparray[i] = tmparray[i] + "Start : " + tmp.getString("start") + "\n";
+                        tmparray[i] = tmparray[i] + "Hours : " + tmp.getString("nb_hours") + "\n";
+                        nbElem++;
+                    } else {
+                        tmparray[i] = "Null";
+                    }
+                } catch (JSONException e) {
+                    Toast toast = Toast.makeText(getActivity(), R.string.errorParse, Toast.LENGTH_LONG);
+                    toast.show();
+               }
             }
+
+            arrayPlanning = new String[nbElem];
+            nbElem = 0;
+            for (String aTmparray : tmparray)
+                if (!aTmparray.equals("Null") && nbElem < arrayPlanning.length) {
+                    arrayPlanning[nbElem] = aTmparray;
+                    nbElem++;
+                }
             ArrayAdapter<String> adpater = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, arrayPlanning);
             Planning.setAdapter(adpater);
 
-        } catch (InterruptedException | ExecutionException | JSONException | NullPointerException e) {
-            Toast toast = Toast.makeText(getActivity(), R.string.errorApi, Toast.LENGTH_LONG);
-            toast.show();
+            } catch(InterruptedException | ExecutionException | NullPointerException e){
+                Toast toast = Toast.makeText(getActivity(), R.string.errorApi, Toast.LENGTH_LONG);
+                toast.show();
+            }
         }
     }
-}

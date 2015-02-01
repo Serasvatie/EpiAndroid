@@ -20,4 +20,5 @@
     <string name="PatternLog">Logs time :</string>
     <string name="Hour">Hours</string>
     <string name="DefaultDate">0000-00-00</string>
+    <string name="errorParse">Couldn\'t get one elements of the API</string>
 </resources>
