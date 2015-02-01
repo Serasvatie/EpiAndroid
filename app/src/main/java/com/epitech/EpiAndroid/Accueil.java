@@ -78,7 +78,11 @@ public class Accueil extends Fragment {
             for (int i = 0; i < tabMessage.length(); i++) {
                 JSONObject tmp = tabMessage.getJSONObject(i);
                 int indexHtml = tmp.getString("title").indexOf("<a href");
-                arrayMessage[i] = tmp.getString("title").substring(0, indexHtml) + Html.fromHtml(tmp.getString("title").substring(indexHtml))+ " " + tmp.getString("date");
+                if (indexHtml == 0) {
+                    arrayMessage[i] = tmp.getString("title") + " " + tmp.getString("date");
+                } else {
+                    arrayMessage[i] = tmp.getString("title").substring(0, indexHtml) + Html.fromHtml(tmp.getString("title").substring(indexHtml)) + " " + tmp.getString("date");
+                }
             }
             ArrayAdapter<String> adpater = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, arrayMessage);
             list.setAdapter(adpater);

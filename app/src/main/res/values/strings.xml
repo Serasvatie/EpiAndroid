@@ -19,4 +19,5 @@
     <string name="errorApi">Fail to get informations from the API !</string>
     <string name="PatternLog">Logs time :</string>
     <string name="Hour">Hours</string>
+    <string name="DefaultDate">0000-00-00</string>
 </resources>
