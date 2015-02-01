@@ -78,7 +78,7 @@ public class Accueil extends Fragment {
             for (int i = 0; i < tabMessage.length(); i++) {
                 JSONObject tmp = tabMessage.getJSONObject(i);
                 int indexHtml = tmp.getString("title").indexOf("<a href");
-                if (indexHtml == 0) {
+                if (indexHtml == -1) {
                     arrayMessage[i] = tmp.getString("title") + " " + tmp.getString("date");
                 } else {
                     arrayMessage[i] = tmp.getString("title").substring(0, indexHtml) + Html.fromHtml(tmp.getString("title").substring(indexHtml)) + " " + tmp.getString("date");
