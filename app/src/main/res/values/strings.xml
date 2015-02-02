@@ -11,7 +11,7 @@
     <string name="title_section1">Accueil</string>
     <string name="title_section2">Planning</string>
     <string name="title_section3">Token</string>
-    <string name="title_section4">Grade</string>
+    <string name="title_section4">Module/Grade</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
@@ -46,6 +46,7 @@
     <string name="URLgetMessages">http://epitech-api.herokuapp.com/messages</string>
     <string name="URLgetPlanning">http://epitech-api.herokuapp.com/planning</string>
     <string name="URLsetToken">http://epitech-api.herokuapp.com/token</string>
+    <string name="URLgetModules">http://epitech-api.herokuapp.com/modules</string>
     <string name="token">token</string>
     <string name="message">message</string>
     <string name="endline">\n</string>
@@ -71,4 +72,14 @@
     <string name="RoomDes">Room : </string>
     <string name="StartDes">Start : </string>
     <string name="HourDes">Hours : </string>
+
+    <string name="modules">modules</string>
+    <string name="grade">grade</string>
+    <string name="gradeModule">Grade : </string>
+    <string name="nameModule">Name : </string>
+    <string name="dateSubModule">Date subscription :</string>
+    <string name="date_ins">date_ins</string>
+    <string name="creditModule">Credits :</string>
+    <string name="credits">credits</string>
+    <string name="moduleModule">Module : </string>
 </resources>
