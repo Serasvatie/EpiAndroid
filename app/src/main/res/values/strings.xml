@@ -47,6 +47,7 @@
     <string name="URLgetPlanning">http://epitech-api.herokuapp.com/planning</string>
     <string name="URLsetToken">http://epitech-api.herokuapp.com/token</string>
     <string name="URLgetModules">http://epitech-api.herokuapp.com/modules</string>
+    <string name="URLgetProjects">http://epitech-api.herokuapp.com/projects</string>
     <string name="token">token</string>
     <string name="message">message</string>
     <string name="endline">\n</string>
@@ -82,4 +83,18 @@
     <string name="creditModule">Credits :</string>
     <string name="credits">credits</string>
     <string name="moduleModule">Module : </string>
+
+    <string name="Project">Projects</string>
+    <string name="project">project</string>
+    <string name="title_module">title_module</string>
+    <string name="begin_event">begin_acti</string>
+    <string name="end_event">end_acti</string>
+    <string name="BeginEvent">Begin :</string>
+    <string name="EndEvent">End :</string>
+    <string name="info_creneau">info_creneau</string>
+    <string name="InfoCreneau">Creneau :</string>
+    <string name="getProject">Projet</string>
+    <string name="getProjects">Projets</string>
+    <string name="type_acti">type_acti</string>
+    <string name="Suivis">Suivis</string>
 </resources>

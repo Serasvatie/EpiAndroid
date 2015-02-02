@@ -55,6 +55,9 @@ public class MainNavigation extends ActionBarActivity
             case 3:
                 fragment = new Grade();
                 break;
+            case 4:
+                fragment = new Project();
+                break;
             default :
                 fragment = new Accueil();
                 break;
@@ -77,6 +80,8 @@ public class MainNavigation extends ActionBarActivity
             case 4:
                 mTitle = getString(R.string.title_section4);
                 break;
+            case 5:
+                mTitle = getString(R.string.Project);
             default:
                 mTitle = getString(R.string.title_section1);
                 break;
