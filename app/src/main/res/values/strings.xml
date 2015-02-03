@@ -48,6 +48,7 @@
     <string name="URLsetToken">http://epitech-api.herokuapp.com/token</string>
     <string name="URLgetModules">http://epitech-api.herokuapp.com/modules</string>
     <string name="URLgetProjects">http://epitech-api.herokuapp.com/projects</string>
+    <string name="URLgetMarks">http://epitech-api.herokuapp.com/marks</string>
     <string name="token">token</string>
     <string name="message">message</string>
     <string name="endline">\n</string>
@@ -103,4 +104,8 @@
     <string name="tosubscribe">Click to subscribe</string>
 
     <string name="features">Features not implement</string>
+    <string name="marksProject">Project marks :</string>
+    <string name="notes">notes</string>
+    <string name="notesDes">Note :</string>
+    <string name="final_note">final_note</string>
 </resources>
