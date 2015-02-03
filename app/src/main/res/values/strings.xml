@@ -101,4 +101,6 @@
     <string name="alreadysubscribeclick">Already subscribe, click to unsubscribe</string>
     <string name="alreadysubscribe">Already subscribe</string>
     <string name="tosubscribe">Click to subscribe</string>
+
+    <string name="features">Features not implement</string>
 </resources>

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.epitech.Model.PostRequest;
 import com.epitech.Model.PostRequestArray;
 
 import org.json.JSONArray;
@@ -107,12 +108,11 @@ public class Project extends Fragment {
                         tmp = arrayreq.getJSONObject(position);
                         if (tmp.getString(getString(R.string.type_acti)).equals(getString(R.string.getProject)) || tmp.getString(getString(R.string.type_acti)).equals(getString(R.string.getProjects)))
                         {
+                            String str = getString(R.string.features);
                             if (tmp.getString(getString(R.string.registered)).equals("1")) {
-                                String str = "1"+tmp.getString(getString(R.string.scolaryear)) + tmp.getString(getString(R.string.codemodule)) + tmp.getString(getString(R.string.codeinstance)) + tmp.getString(getString(R.string.codeacti));
                                 Toast toast = Toast.makeText(getActivity(), str, Toast.LENGTH_LONG);
                                 toast.show();
                             } else {
-                                String str = "0"+tmp.getString(getString(R.string.scolaryear)) + tmp.getString(getString(R.string.codemodule)) + tmp.getString(getString(R.string.codeinstance)) + tmp.getString(getString(R.string.codeacti));
                                 Toast toast = Toast.makeText(getActivity(), str, Toast.LENGTH_LONG);
                                 toast.show();
                             }
