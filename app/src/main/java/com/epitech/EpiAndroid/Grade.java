@@ -61,16 +61,21 @@ public class Grade extends Fragment {
             String tmparray[] = new String[tabModule.length()];
             int nbElem = 0;
             for (int i = 0; i < tabModule.length(); i++) {
-                JSONObject tmp = tabModule.getJSONObject(i);
-                if (!tmp.getString(getString(R.string.title)).equals("")) {
-                    tmparray[i] = getString(R.string.nameModule) + tmp.getString(getString(R.string.title)) + "\n";
-                    tmparray[i] = tmparray[i] + getString(R.string.dateSubModule) + tmp.getString(getString(R.string.date_ins)) + "\n";
-                    tmparray[i] = tmparray[i] + getString(R.string.gradeModule) + tmp.getString(getString(R.string.grade)) + "\n";
-                    tmparray[i] = tmparray[i] + getString(R.string.creditModule) + tmp.getString(getString(R.string.credits)) + "\n";
-                    tmparray[i] = tmparray[i] + getString(R.string.moduleModule) + tmp.getString(getString(R.string.codemodule)) + "\n";
-                    nbElem++;
-                } else {
-                    tmparray[i] = getString(R.string.Null);
+                try {
+                    JSONObject tmp = tabModule.getJSONObject(i);
+                    if (!tmp.getString(getString(R.string.title)).equals("")) {
+                        tmparray[i] = getString(R.string.nameModule) + tmp.getString(getString(R.string.title)) + "\n";
+                        tmparray[i] = tmparray[i] + getString(R.string.dateSubModule) + tmp.getString(getString(R.string.date_ins)) + "\n";
+                        tmparray[i] = tmparray[i] + getString(R.string.gradeModule) + tmp.getString(getString(R.string.grade)) + "\n";
+                        tmparray[i] = tmparray[i] + getString(R.string.creditModule) + tmp.getString(getString(R.string.credits)) + "\n";
+                        tmparray[i] = tmparray[i] + getString(R.string.moduleModule) + tmp.getString(getString(R.string.codemodule)) + "\n";
+                        nbElem++;
+                    } else {
+                        tmparray[i] = getString(R.string.Null);
+                    }
+                } catch (JSONException e) {
+                    Toast toast = Toast.makeText(getActivity(), R.string.errorParse, Toast.LENGTH_LONG);
+                    toast.show();
                 }
             }
 

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -59,22 +60,33 @@ public class Project extends Fragment {
             int nbElem = 0;
 
             for (int i = 0; i < arrayreq.length(); i++) {
-                JSONObject tmp = arrayreq.getJSONObject(i);
-                if (tmp.getString(getString(R.string.type_acti)).equals(getString(R.string.getProject)) || tmp.getString(getString(R.string.type_acti)).equals(getString(R.string.getProjects))) {
-                    tmparray[i] = tmp.getString(getString(R.string.acti_title)) + "\n";
-                    tmparray[i] = tmparray[i] + getString(R.string.moduleModule) + tmp.getString(getString(R.string.title_module)) + "\n";
-                    tmparray[i] = tmparray[i] + getString(R.string.BeginEvent) + tmp.getString(getString(R.string.begin_event)) + "\n";
-                    tmparray[i] = tmparray[i] + getString(R.string.EndEvent) + tmp.getString(getString(R.string.end_event)) + "\n";
-                    nbElem++;
-                } else if (tmp.getString(getString(R.string.type_acti)).equals(getString(R.string.Suivis)))
-                {
-                    tmparray[i] = tmp.getString(getString(R.string.acti_title)) + "\n";
-                    tmparray[i] = tmparray[i] + getString(R.string.moduleModule) + tmp.getString(getString(R.string.title_module)) + "\n";
-                    tmparray[i] = tmparray[i] + getString(R.string.InfoCreneau) + tmp.getString(getString(R.string.info_creneau)) + "\n";
-                    nbElem++;
-                }
-                else {
-                    tmparray[i] = getString(R.string.Null);
+                try {
+                    JSONObject tmp = arrayreq.getJSONObject(i);
+                    if (tmp.getString(getString(R.string.type_acti)).equals(getString(R.string.getProject)) || tmp.getString(getString(R.string.type_acti)).equals(getString(R.string.getProjects))) {
+                        tmparray[i] = tmp.getString(getString(R.string.acti_title)) + "\n";
+                        tmparray[i] = tmparray[i] + getString(R.string.moduleModule) + tmp.getString(getString(R.string.title_module)) + "\n";
+                        tmparray[i] = tmparray[i] + getString(R.string.BeginEvent) + tmp.getString(getString(R.string.begin_event)) + "\n";
+                        tmparray[i] = tmparray[i] + getString(R.string.EndEvent) + tmp.getString(getString(R.string.end_event)) + "\n";
+                        if (tmp.getString(getString(R.string.registered)).equals("1")) {
+                            tmparray[i] = tmparray[i] + getString(R.string.alreadysubscribeclick) + "\n";
+                        } else {
+                            tmparray[i] = tmparray[i] + getString(R.string.tosubscribe) + "\n";
+                        }
+                        nbElem++;
+                    } else if (tmp.getString(getString(R.string.type_acti)).equals(getString(R.string.Suivis))) {
+                        tmparray[i] = tmp.getString(getString(R.string.acti_title)) + "\n";
+                        tmparray[i] = tmparray[i] + getString(R.string.moduleModule) + tmp.getString(getString(R.string.title_module)) + "\n";
+                        tmparray[i] = tmparray[i] + getString(R.string.InfoCreneau) + tmp.getString(getString(R.string.info_creneau)) + "\n";
+                        if (tmp.getString(getString(R.string.registered)).equals("1")) {
+                            tmparray[i] = tmparray[i] + getString(R.string.alreadysubscribe) + "\n";
+                        }
+                        nbElem++;
+                    } else {
+                        tmparray[i] = getString(R.string.Null);
+                    }
+                } catch (JSONException e) {
+                    Toast toast = Toast.makeText(getActivity(), R.string.errorParse, Toast.LENGTH_LONG);
+                    toast.show();
                 }
             }
 
@@ -87,8 +99,32 @@ public class Project extends Fragment {
                 }
             ArrayAdapter<String> adpater = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, arrayProject);
             Project.setAdapter(adpater);
-
-        } catch (InterruptedException | ExecutionException | JSONException e) {
+            Project.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    JSONObject tmp;
+                    try {
+                        tmp = arrayreq.getJSONObject(position);
+                        if (tmp.getString(getString(R.string.type_acti)).equals(getString(R.string.getProject)) || tmp.getString(getString(R.string.type_acti)).equals(getString(R.string.getProjects)))
+                        {
+                            if (tmp.getString(getString(R.string.registered)).equals("1")) {
+                                String str = "1"+tmp.getString(getString(R.string.scolaryear)) + tmp.getString(getString(R.string.codemodule)) + tmp.getString(getString(R.string.codeinstance)) + tmp.getString(getString(R.string.codeacti));
+                                Toast toast = Toast.makeText(getActivity(), str, Toast.LENGTH_LONG);
+                                toast.show();
+                            } else {
+                                String str = "0"+tmp.getString(getString(R.string.scolaryear)) + tmp.getString(getString(R.string.codemodule)) + tmp.getString(getString(R.string.codeinstance)) + tmp.getString(getString(R.string.codeacti));
+                                Toast toast = Toast.makeText(getActivity(), str, Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        }
+                    } catch (JSONException e)
+                    {
+                        Toast toast = Toast.makeText(getActivity(), R.string.errorParse, Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+            });
+        } catch (InterruptedException | ExecutionException e) {
             Toast toast = Toast.makeText(getActivity(), R.string.errorApi, Toast.LENGTH_LONG);
             toast.show();
         }

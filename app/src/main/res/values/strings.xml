@@ -97,4 +97,8 @@
     <string name="getProjects">Projets</string>
     <string name="type_acti">type_acti</string>
     <string name="Suivis">Suivis</string>
+    <string name="registered">registered</string>
+    <string name="alreadysubscribeclick">Already subscribe, click to unsubscribe</string>
+    <string name="alreadysubscribe">Already subscribe</string>
+    <string name="tosubscribe">Click to subscribe</string>
 </resources>
